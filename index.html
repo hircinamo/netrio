@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Humanoid X Bot - Universal Bypass V4</title>
+    <title>Humanoid X Bot - Anti-Block Edition</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -56,7 +56,7 @@
             font-size: 14px;
         }
 
-        select, input[type="text"], input[type="password"], textarea {
+        input[type="text"], input[type="password"], textarea {
             width: 100%;
             padding: 12px;
             border: 3px solid var(--dark);
@@ -155,22 +155,14 @@
 </head>
 <body>
 
-    <!-- LOGIN SCREEN -->
+    <!-- 1. LOGIN SCREEN -->
     <div id="login-screen">
         <h1 style="font-size: 28px; margin-bottom: 5px;">🤖 Human X Bot</h1>
-        <p style="margin-bottom: 20px; color:#64748B;">Anti-AI Humanizer Dashboard (Fixed Bypass)</p>
+        <p style="margin-bottom: 20px; color:#64748B;">Safe & Secure Groq Console</p>
         
         <div class="input-group">
-            <label>Select AI Provider:</label>
-            <select id="api-provider">
-                <option value="gemini">Google Gemini API (Highly Recommended)</option>
-                <option value="groq">Groq API (Llama 3 Bypass)</option>
-            </select>
-        </div>
-
-        <div class="input-group">
-            <label>Paste API Key:</label>
-            <input type="password" id="api-key-input" placeholder="Enter API Key here...">
+            <label>Paste your Groq API Key:</label>
+            <input type="password" id="api-key-input" placeholder="gsk_...">
         </div>
         
         <div class="input-group">
@@ -178,38 +170,40 @@
             <input type="text" id="my-username-input" placeholder="e.g., @my_handle">
         </div>
         
-        <button class="btn-primary" onclick="login()">Enter Dashboard 🚀</button>
+        <button class="btn-primary" onclick="login()">Open Dashboard 🚀</button>
     </div>
 
-    <!-- MAIN DASHBOARD -->
+    <!-- 2. MAIN DASHBOARD -->
     <div id="main-dashboard">
         <header>
             <div class="logo">⚡ Humanoid Dash</div>
-            <span id="user-profile" style="font-weight: 700;"></span>
-            <button class="btn-danger" style="padding: 6px 12px; width: auto;" onclick="logout()">Exit</button>
+            <span id="user-profile" style="font-weight: 700; color: var(--accent);"></span>
+            <button class="btn-danger" style="padding: 6px 12px; width: auto;" onclick="logout()">Logout</button>
         </header>
 
         <div class="layout">
+            <!-- SIDEBAR -->
             <div class="sidebar">
-                <h3>📁 Folders</h3>
+                <h3>📁 Folders / Projects</h3>
                 <div style="margin-top: 12px; display: flex; gap: 6px;">
-                    <input type="text" id="new-folder-input" placeholder="Project name...">
+                    <input type="text" id="new-folder-input" placeholder="Folder name...">
                     <button class="btn-primary" style="width: auto;" onclick="createFolder()">+</button>
                 </div>
                 <div id="folders-list" class="folder-grid"></div>
             </div>
 
+            <!-- WORKSPACE -->
             <div class="content-area" id="workspace" style="display: none;">
                 <h2 id="current-project-title" style="margin-bottom: 15px; color: var(--accent);"></h2>
                 
                 <div class="input-group">
-                    <label>Target Account to Tag (@):</label>
+                    <label>Target Twitter Username to Tag (@):</label>
                     <input type="text" id="target-username" placeholder="@elonmusk">
                 </div>
 
                 <div class="input-group">
-                    <label>Project Base Info (বাংলা বা ইংরেজি):</label>
-                    <textarea id="project-context" rows="4" placeholder="প্রজেক্টের তথ্য দিন..."></textarea>
+                    <label>Project Details / Context (বাংলা বা ইংরেজি):</label>
+                    <textarea id="project-context" rows="4" placeholder="প্রজেক্টের তথ্য এখানে দিন..."></textarea>
                 </div>
 
                 <button class="btn-accent" onclick="saveProjectData()">Save Info 💾</button>
@@ -227,6 +221,7 @@
                 </div>
             </div>
 
+            <!-- NO SELECTION PLACEHOLDER -->
             <div class="content-area" id="no-selection" style="display: flex; justify-content: center; align-items: center; min-height: 200px;">
                 <h3 style="color: #94A3B8;">👈 Select or create a folder to begin!</h3>
             </div>
@@ -234,11 +229,11 @@
     </div>
 
     <script>
-        let appData = { provider: 'gemini', apiKey: '', myUsername: '', folders: {} };
+        let appData = { apiKey: '', myUsername: '', folders: {} };
         let currentFolder = null;
 
         window.onload = function() {
-            const saved = localStorage.getItem('humanoid_bot_v4');
+            const saved = localStorage.getItem('humanoid_bot_groq_secure');
             if (saved) {
                 appData = JSON.parse(saved);
                 if (appData.apiKey && appData.myUsername) showDashboard();
@@ -246,33 +241,35 @@
         };
 
         function login() {
-            appData.provider = document.getElementById('api-provider').value;
-            appData.apiKey = document.getElementById('api-key-input').value.trim();
+            const key = document.getElementById('api-key-input').value.trim();
             const user = document.getElementById('my-username-input').value.trim();
 
-            if (!appData.apiKey || !user) {
+            if (!key || !user) {
                 alert('Please fill all fields!');
                 return;
             }
+            appData.apiKey = key;
             appData.myUsername = user.startsWith('@') ? user : '@' + user;
             saveToLocalStorage();
             showDashboard();
         }
 
         function logout() {
-            localStorage.removeItem('humanoid_bot_v4');
-            location.reload();
+            if(confirm("Logout from dashboard? Your key will be safely removed from browser cache.")) {
+                localStorage.removeItem('humanoid_bot_groq_secure');
+                location.reload();
+            }
         }
 
         function showDashboard() {
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('main-dashboard').style.display = 'block';
-            document.getElementById('user-profile').innerText = appData.myUsername;
+            document.getElementById('user-profile').innerText = `User: ${appData.myUsername}`;
             renderFolders();
         }
 
         function saveToLocalStorage() {
-            localStorage.setItem('humanoid_bot_v4', JSON.stringify(appData));
+            localStorage.setItem('humanoid_bot_groq_secure', JSON.stringify(appData));
         }
 
         function createFolder() {
@@ -292,7 +289,7 @@
             for (let name in appData.folders) {
                 const div = document.createElement('div');
                 div.className = `folder-item ${currentFolder === name ? 'active' : ''}`;
-                div.innerHTML = `<span>📁 ${name}</span><span style="color:red;cursor:pointer;" onclick="deleteFolder(event, '${name}')">🗑️</span>`;
+                div.innerHTML = `<span>📁 ${name}</span><span style="color:red;cursor:pointer;font-size:16px;" onclick="deleteFolder(event, '${name}')">🗑️</span>`;
                 div.onclick = () => selectFolder(name);
                 list.appendChild(div);
             }
@@ -300,7 +297,7 @@
 
         function deleteFolder(e, name) {
             e.stopPropagation();
-            if(confirm('Delete folder?')) {
+            if(confirm(`Delete folder "${name}"?`)) {
                 delete appData.folders[name];
                 if(currentFolder === name) currentFolder = null;
                 saveToLocalStorage();
@@ -315,10 +312,10 @@
             renderFolders();
             document.getElementById('no-selection').style.display = 'none';
             document.getElementById('workspace').style.display = 'block';
-            document.getElementById('current-project-title').innerText = `📁 Folder: ${name}`;
+            document.getElementById('current-project-title').innerText = `📁 Active Folder: ${name}`;
             document.getElementById('target-username').value = appData.folders[name].target || '';
             document.getElementById('project-context').value = appData.folders[name].context || '';
-            document.getElementById('post-output').innerText = 'Ready...';
+            document.getElementById('post-output').innerText = 'Ready to type...';
             renderHistory();
         }
 
@@ -327,7 +324,7 @@
             appData.folders[currentFolder].target = document.getElementById('target-username').value.trim();
             appData.folders[currentFolder].context = document.getElementById('project-context').value.trim();
             saveToLocalStorage();
-            alert('Saved successfully! 💾');
+            alert('Folder data saved locally! 💾');
         }
 
         function renderHistory() {
@@ -336,114 +333,78 @@
             appData.folders[currentFolder].history.forEach(t => {
                 const s = document.createElement('span');
                 s.className = 'history-tag';
-                s.innerText = t.substring(0, 20) + '...';
+                s.innerText = t.substring(0, 22) + '...';
                 container.appendChild(s);
             });
         }
 
-        // 🛠️ REWRITTEN ANTI-CORS GENERATOR USING REVERSE PROXY
+        // 🛠️ NEW DIRECT DEPLOYED BLOCK-PROOF ENGINE
         async function generatePost() {
             if (!currentFolder) return;
             const target = document.getElementById('target-username').value.trim();
             const context = document.getElementById('project-context').value.trim();
             const output = document.getElementById('post-output');
 
-            if (!context) { alert('Please provide text info!'); return; }
-            output.innerText = 'Bypassing restriction & writing post... 💭';
+            if (!context) { alert('Please provide project details!'); return; }
+            output.innerText = 'Connecting to Groq safely... 💭';
 
             const historyText = appData.folders[currentFolder].history.join(' | ');
-            const promptInstruction = `Write a very short, casual Twitter/X post based on this info: "${context}".
-            RULES:
-            1. Language: Write in simple, short, casual English.
-            2. Anti-AI: No emojis. Absolutely NO dashes or hyphens like "-", "—", "–". Do not use robotic words.
-            3. Human Typo: You MUST make exactly ONE realistic spelling mistake (like "teh", "dont", "profect", "realy", "tomorow") so it looks manually typed.
-            4. Tagging: Tag ${target} naturally.
-            5. Unique: Do not repeat or copy the style of these past posts: [${historyText}].
-            6. Output ONLY the raw post text. No quotes, no preamble.`;
+            
+            // AI Output Tuning Prompt Rules
+            const systemInstruction = `You are a casual human user on Twitter (X). Translate the context to simple English if it's in Bengali.
+            MANDATORY RULES:
+            1. No AI Footprint: DO NOT use any emojis. Never use dashes/hyphens like "-", "—", "–". Do not use overly formal/robotic words.
+            2. Language Style: Very casual, short, and natural English. Write it exactly like someone typing on a phone screen.
+            3. Typo Rule: You MUST intentionally include exactly ONE minor spelling error (such as "teh", "dont", "realy", "profect", "tomorow") to bypass all AI detection systems.
+            4. Tagging: Always tag the user ${target} naturally inside the body or at the end.
+            5. Anti-Repeat: Make this post completely different in sentence structure and wording from these past items: [${historyText}].
+            6. Pure Output: Reply ONLY with the tweet text. Do not include quotes, intros, or explanations.`;
 
-            // Using Allorigins & Cors-anywhere public cluster to completely strip CORS blockages
-            const proxyUrl = "https://api.allorigins.win/get?url=";
+            try {
+                // Fixed direct stream connection with cross-origin safe handling
+                const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+                    method: 'POST',
+                    mode: 'cors', // Force explicit browser cross-origin mode
+                    headers: {
+                        'Authorization': `Bearer ${appData.apiKey}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        model: 'llama3-8b-8192',
+                        messages: [
+                            { role: 'system', content: systemInstruction },
+                            { role: 'user', content: `Context data: ${context}` }
+                        ],
+                        temperature: 0.85
+                    })
+                });
 
-            if (appData.provider === 'gemini') {
-                try {
-                    // Universal base structural endpoint
-                    const targetUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${appData.apiKey}`;
+                const data = await response.json();
+                
+                if (data.choices && data.choices[0] && data.choices[0].message.content) {
+                    let finalTweet = data.choices[0].message.content.trim();
+                    finalTweet = finalTweet.replace(/^["']|["']$/g, ''); // Clean outside quotes
                     
-                    const payload = {
-                        contents: [{ parts: [{ text: promptInstruction }] }]
-                    };
-
-                    const response = await fetch(targetUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    const data = await response.json();
-                    
-                    if (data.candidates && data.candidates[0].content.parts[0].text) {
-                        displayResult(data.candidates[0].content.parts[0].text);
-                    } else if (data.error) {
-                        output.innerText = `Gemini API Error: ${data.error.message}\nMake sure your key is correct.`;
-                    } else {
-                        throw new Error();
-                    }
-                } catch (e) {
-                    // If direct request fails, trigger the CORS proxy bypass automatically
-                    try {
-                        const targetUrl = encodeURIComponent(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${appData.apiKey}`);
-                        const res = await fetch(`${proxyUrl}${targetUrl}`);
-                        const wrapper = await res.json();
-                        const data = JSON.parse(wrapper.contents);
-                        if(data.candidates && data.candidates[0].content.parts[0].text) {
-                            displayResult(data.candidates[0].content.parts[0].text);
-                        } else {
-                            output.innerText = "API key invalid or blocked by Provider. Check your Google AI Studio Dashboard.";
-                        }
-                    } catch(err) {
-                        output.innerText = "Connection Blocked. Please double check your internet or API Key status.";
-                    }
+                    output.innerText = finalTweet;
+                    appData.folders[currentFolder].history.push(finalTweet);
+                    saveToLocalStorage();
+                    renderHistory();
+                } else if (data.error) {
+                    output.innerText = `Groq API Error: ${data.error.message}\n(Please generate a fresh Groq Key from your console)`;
+                } else {
+                    output.innerText = "Error: Key rejected or blocked by Groq. Please generate a fresh Key.";
                 }
-            } else {
-                // Groq API with Proxy Connection Block Defuser
-                try {
-                    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${appData.apiKey}`,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            model: 'llama3-8b-8192',
-                            messages: [{ role: 'user', content: promptInstruction }],
-                            temperature: 0.85
-                        })
-                    });
-                    const data = await response.json();
-                    if(data.choices && data.choices[0].message.content) {
-                        displayResult(data.choices[0].message.content);
-                    } else {
-                        output.innerText = "Groq Key Error or Request Refused.";
-                    }
-                } catch(e) {
-                    output.innerText = "CORS detected for Groq. Please use the Google Gemini API option above—it contains the automatic proxy defuser.";
-                }
+            } catch (error) {
+                console.error(error);
+                output.innerText = "Connection Error: Failed to contact Groq Server. Make sure your browser has a stable connection and the Key is valid.";
             }
-        }
-
-        function displayResult(text) {
-            let cleanText = text.trim().replace(/^["']|["']$/g, '');
-            document.getElementById('post-output').innerText = cleanText;
-            appData.folders[currentFolder].history.push(cleanText);
-            saveToLocalStorage();
-            renderHistory();
         }
 
         function copyPost() {
             const text = document.getElementById('post-output').innerText;
-            if(text && !text.startsWith('Ready') && !text.startsWith('Bypassing')) {
+            if(text && !text.startsWith('Ready') && !text.startsWith('Connecting')) {
                 navigator.clipboard.writeText(text);
-                alert('Copied successfully! 📋');
+                alert('Copied to clipboard! 📋');
             }
         }
     </script>

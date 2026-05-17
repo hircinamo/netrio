@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Human X Bot - Fixed API Dash</title>
-    <!-- Google Fonts for Cartoon/Playful Vibe -->
+    <title>Humanoid X Bot - Fixed V3</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -32,7 +31,6 @@
         h1, h2, h3, h4, .logo {
             font-family: 'Fredoka One', cursive;
             color: var(--dark);
-            line-height: 1.2;
         }
 
         #login-screen {
@@ -49,7 +47,6 @@
         .input-group {
             margin-bottom: 16px;
             text-align: left;
-            width: 100%;
         }
 
         label {
@@ -65,9 +62,7 @@
             border: 3px solid var(--dark);
             border-radius: 14px;
             font-size: 15px;
-            background: #FFF;
             outline: none;
-            color: var(--dark);
             font-weight: 600;
         }
 
@@ -79,12 +74,8 @@
             border-radius: 14px;
             font-family: 'Fredoka One', cursive;
             font-size: 16px;
-            transition: transform 0.1s ease, box-shadow 0.1s ease;
             box-shadow: 4px 4px 0px var(--dark);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            transition: transform 0.1s;
         }
 
         button:active {
@@ -96,11 +87,7 @@
         .btn-accent { background: var(--accent); color: white; }
         .btn-danger { background: #FF7675; color: white; }
 
-        #main-dashboard {
-            display: none;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
+        #main-dashboard { display: none; max-width: 1100px; margin: 0 auto; }
 
         header {
             display: flex;
@@ -114,11 +101,7 @@
             box-shadow: 5px 5px 0px var(--dark);
         }
 
-        .layout {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-        }
+        .layout { display: grid; grid-template-columns: 1fr; gap: 20px; }
 
         .sidebar, .content-area {
             background: var(--card-bg);
@@ -126,7 +109,6 @@
             border-radius: 24px;
             padding: 20px;
             box-shadow: 5px 5px 0px var(--dark);
-            width: 100%;
         }
 
         .folder-grid {
@@ -134,8 +116,6 @@
             grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
             gap: 10px;
             margin-top: 15px;
-            max-height: 250px;
-            overflow-y: auto;
         }
 
         .folder-item {
@@ -148,7 +128,6 @@
             justify-content: space-between;
             align-items: center;
             font-weight: 700;
-            font-size: 13px;
             position: relative;
         }
 
@@ -162,114 +141,92 @@
             padding: 15px;
         }
 
-        .history-container {
-            margin-top: 20px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-
-        .history-tag {
-            background: #E2E8F0;
-            padding: 5px 10px;
-            border-radius: 8px;
-            font-size: 12px;
-            border: 2px solid var(--dark);
-        }
+        .history-container { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px;}
+        .history-tag { background: #E2E8F0; padding: 5px 10px; border-radius: 8px; font-size: 12px; border: 2px solid var(--dark); }
 
         @media (min-width: 768px) {
             .layout { grid-template-columns: 320px 1fr; }
-            .folder-grid { grid-template-columns: 1fr; max-height: 400px; }
+            .folder-grid { grid-template-columns: 1fr; }
             button { width: auto; }
-            .action-btns { display: flex; gap: 10px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. LOGIN SCREEN -->
+    <!-- LOGIN SCREEN -->
     <div id="login-screen">
         <h1 style="font-size: 28px; margin-bottom: 5px;">🤖 Human X Bot</h1>
-        <p style="margin-bottom: 20px; color:#64748B;">Fixed Client-Side Connection Bridge</p>
+        <p style="margin-bottom: 20px; color:#64748B;">Anti-AI Humanizer Dashboard</p>
         
         <div class="input-group">
-            <label>Choose AI Network Engine:</label>
+            <label>Select AI Provider:</label>
             <select id="api-provider">
-                <option value="gemini">Google Gemini AI Engine (Recommended for Browser)</option>
-                <option value="groq">Groq Llama-3 Engine (Alternate Cloud Bridge)</option>
+                <option value="gemini">Google Gemini API (Stable on Github Pages)</option>
+                <option value="groq">Groq API (Llama 3)</option>
             </select>
         </div>
 
         <div class="input-group">
-            <label>Enter Secret API Key:</label>
-            <input type="password" id="api-key-input" placeholder="Paste your API key here...">
+            <label>Paste API Key:</label>
+            <input type="password" id="api-key-input" placeholder="AI Studio Key or Groq Key...">
         </div>
         
         <div class="input-group">
-            <label>Your Twitter Handle Username:</label>
+            <label>Your Twitter Username:</label>
             <input type="text" id="my-username-input" placeholder="e.g., @my_handle">
         </div>
         
-        <button class="btn-primary" onclick="login()">Initialize Workspace 🚀</button>
+        <button class="btn-primary" onclick="login()">Enter Dashboard 🚀</button>
     </div>
 
-    <!-- 2. MAIN DASHBOARD -->
+    <!-- MAIN DASHBOARD -->
     <div id="main-dashboard">
         <header>
             <div class="logo">⚡ Humanoid Dash</div>
-            <div style="display: flex; align-items: center; gap: 12px;">
-                <span id="user-profile" style="font-weight: 700; font-size: 14px; color: var(--accent);"></span>
-                <button class="btn-danger" style="padding: 6px 12px; font-size: 12px; width: auto;" onclick="logout()">Exit</button>
-            </div>
+            <span id="user-profile" style="font-weight: 700;"></span>
+            <button class="btn-danger" style="padding: 6px 12px; width: auto;" onclick="logout()">Exit</button>
         </header>
 
         <div class="layout">
-            <!-- SIDEBAR: FOLDERS -->
             <div class="sidebar">
-                <h3>📁 Project Folders</h3>
+                <h3>📁 Folders</h3>
                 <div style="margin-top: 12px; display: flex; gap: 6px;">
-                    <input type="text" id="new-folder-input" placeholder="Folder Name..." style="padding: 10px;">
-                    <button class="btn-primary" style="padding: 10px 15px; width: auto;" onclick="createFolder()">+</button>
+                    <input type="text" id="new-folder-input" placeholder="Project name...">
+                    <button class="btn-primary" style="width: auto;" onclick="createFolder()">+</button>
                 </div>
                 <div id="folders-list" class="folder-grid"></div>
             </div>
 
-            <!-- MAIN WORKSPACE -->
             <div class="content-area" id="workspace" style="display: none;">
-                <h2 id="current-project-title" style="margin-bottom: 15px; color: var(--accent); font-size: 20px;"></h2>
+                <h2 id="current-project-title" style="margin-bottom: 15px; color: var(--accent);"></h2>
                 
                 <div class="input-group">
-                    <label>Target Account Username to Tag (@):</label>
-                    <input type="text" id="target-username" placeholder="e.g., @elonmusk">
+                    <label>Target Account to Tag (@):</label>
+                    <input type="text" id="target-username" placeholder="@elonmusk">
                 </div>
 
                 <div class="input-group">
-                    <label>Project Base Info (বাংলায় বা ইংরেজিতে তথ্য দিন):</label>
-                    <textarea id="project-context" rows="4" placeholder="প্রজেক্টের মূল ডিটেইলস এখানে লিখুন..."></textarea>
+                    <label>Project Base Info (বাংলা বা ইংরেজি):</label>
+                    <textarea id="project-context" rows="4" placeholder="প্রজেক্টের তথ্য দিন..."></textarea>
                 </div>
 
-                <div class="action-btns">
-                    <button class="btn-accent" onclick="saveProjectData()" style="margin-bottom: 10px;">Save Configuration 💾</button>
-                    <button class="btn-primary" onclick="generatePost()" style="margin-bottom: 10px;">Generate Human Tweet ✍️</button>
-                </div>
+                <button class="btn-accent" onclick="saveProjectData()">Save Info 💾</button>
+                <button class="btn-primary" onclick="generatePost()">Write Human Post ✍️</button>
 
-                <!-- OUTPUT VIEW -->
                 <div class="output-box">
-                    <h4 style="font-family:'Fredoka One';">✨ Generated Content:</h4>
-                    <p id="post-output" style="white-space: pre-wrap; font-weight: 600; color: #334155; margin-top: 10px;">Your text will load here...</p>
-                    <button class="copy-btn btn-primary" onclick="copyPost()">Copy Text 📋</button>
+                    <h4>✨ Generated Post:</h4>
+                    <p id="post-output" style="white-space: pre-wrap; font-weight: 600; margin-top: 10px; color: #1E293B;">Your text will load here...</p>
+                    <button class="btn-primary" style="width:auto; font-size:12px; margin-top:10px;" onclick="copyPost()">Copy Text 📋</button>
                 </div>
 
-                <!-- HISTORY LOGS -->
                 <div style="margin-top: 20px; border-top: 2px dashed var(--dark); padding-top: 15px;">
-                    <h4>🚫 Used Database Seeds:</h4>
+                    <h4>🚫 Used Anti-Repeat Log:</h4>
                     <div id="history-log" class="history-container"></div>
                 </div>
             </div>
 
-            <!-- NO SELECTION -->
-            <div class="content-area" id="no-selection" style="display: flex; flex-direction: column; align-items: center; justify-content: center; background: #F8FAFC; min-height: 200px;">
-                <h3>👈 Select or create a folder to begin!</h3>
+            <div class="content-area" id="no-selection" style="display: flex; justify-content: center; align-items: center; min-height: 200px;">
+                <h3 style="color: #94A3B8;">👈 Select or create a folder to begin!</h3>
             </div>
         </div>
     </div>
@@ -279,13 +236,10 @@
         let currentFolder = null;
 
         window.onload = function() {
-            const savedData = localStorage.getItem('humanoid_bot_v3');
-            if (savedData) {
-                appData = JSON.parse(savedData);
-                if (appData.apiKey && appData.myUsername) {
-                    document.getElementById('api-provider').value = appData.provider || 'gemini';
-                    showDashboard();
-                }
+            const saved = localStorage.getItem('humanoid_bot_v3');
+            if (saved) {
+                appData = JSON.parse(saved);
+                if (appData.apiKey && appData.myUsername) showDashboard();
             }
         };
 
@@ -295,26 +249,23 @@
             const user = document.getElementById('my-username-input').value.trim();
 
             if (!appData.apiKey || !user) {
-                alert('Please check your inputs!');
+                alert('Please fill all fields!');
                 return;
             }
-
             appData.myUsername = user.startsWith('@') ? user : '@' + user;
             saveToLocalStorage();
             showDashboard();
         }
 
         function logout() {
-            if(confirm("Exit Dashboard? Data stays safe inside Local Storage.")){
-                document.getElementById('login-screen').style.display = 'block';
-                document.getElementById('main-dashboard').style.display = 'none';
-            }
+            localStorage.removeItem('humanoid_bot_v3');
+            location.reload();
         }
 
         function showDashboard() {
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('main-dashboard').style.display = 'block';
-            document.getElementById('user-profile').innerText = `User: ${appData.myUsername}`;
+            document.getElementById('user-profile').innerText = appData.myUsername;
             renderFolders();
         }
 
@@ -324,45 +275,36 @@
 
         function createFolder() {
             const input = document.getElementById('new-folder-input');
-            const folderName = input.value.trim();
-            if (!folderName) return;
-
-            if (appData.folders[folderName]) {
-                alert('Folder already exists!');
-                return;
-            }
-
-            appData.folders[folderName] = { target: '', context: '', history: [] };
+            const name = input.value.trim();
+            if (!name || appData.folders[name]) return;
+            appData.folders[name] = { target: '', context: '', history: [] };
             input.value = '';
             saveToLocalStorage();
             renderFolders();
-            selectFolder(folderName);
+            selectFolder(name);
         }
 
         function renderFolders() {
-            const listContainer = document.getElementById('folders-list');
-            listContainer.innerHTML = '';
-            for (let folderName in appData.folders) {
+            const list = document.getElementById('folders-list');
+            list.innerHTML = '';
+            for (let name in appData.folders) {
                 const div = document.createElement('div');
-                div.className = `folder-item ${currentFolder === folderName ? 'active' : ''}`;
-                div.innerHTML = `<span>📁 ${folderName}</span>`;
-                div.onclick = () => selectFolder(folderName);
-                
-                const delBtn = document.createElement('span');
-                delBtn.innerHTML = '🗑️';
-                delBtn.style.cursor = 'pointer';
-                delBtn.onclick = (e) => {
-                    e.stopPropagation();
-                    if(confirm(`Delete folder "${folderName}"?`)) {
-                        delete appData.folders[folderName];
-                        if (currentFolder === folderName) currentFolder = null;
-                        saveToLocalStorage();
-                        renderFolders();
-                        resetWorkspace();
-                    }
-                };
-                div.appendChild(delBtn);
-                listContainer.appendChild(div);
+                div.className = `folder-item ${currentFolder === name ? 'active' : ''}`;
+                div.innerHTML = `<span>📁 ${name}</span><span style="color:red;cursor:pointer;" onclick="deleteFolder(event, '${name}')">🗑️</span>`;
+                div.onclick = () => selectFolder(name);
+                list.appendChild(div);
+            }
+        }
+
+        function deleteFolder(e, name) {
+            e.stopPropagation();
+            if(confirm('Delete folder?')) {
+                delete appData.folders[name];
+                if(currentFolder === name) currentFolder = null;
+                saveToLocalStorage();
+                renderFolders();
+                document.getElementById('workspace').style.display = 'none';
+                document.getElementById('no-selection').style.display = 'flex';
             }
         }
 
@@ -371,98 +313,75 @@
             renderFolders();
             document.getElementById('no-selection').style.display = 'none';
             document.getElementById('workspace').style.display = 'block';
-            document.getElementById('current-project-title').innerText = `📁 Workspace: ${name}`;
+            document.getElementById('current-project-title').innerText = `📁 Folder: ${name}`;
             document.getElementById('target-username').value = appData.folders[name].target || '';
             document.getElementById('project-context').value = appData.folders[name].context || '';
-            document.getElementById('post-output').innerText = 'Ready to compile...';
+            document.getElementById('post-output').innerText = 'Ready...';
             renderHistory();
-        }
-
-        function resetWorkspace() {
-            document.getElementById('workspace').style.display = 'none';
-            document.getElementById('no-selection').style.display = 'flex';
         }
 
         function saveProjectData() {
             if (!currentFolder) return;
-            const target = document.getElementById('target-username').value.trim();
-            appData.folders[currentFolder].target = target.startsWith('@') || target === '' ? target : '@' + target;
+            appData.folders[currentFolder].target = document.getElementById('target-username').value.trim();
             appData.folders[currentFolder].context = document.getElementById('project-context').value.trim();
             saveToLocalStorage();
             alert('Saved successfully! 💾');
         }
 
         function renderHistory() {
-            const logContainer = document.getElementById('history-log');
-            logContainer.innerHTML = '';
-            if (currentFolder && appData.folders[currentFolder].history) {
-                appData.folders[currentFolder].history.forEach(item => {
-                    const span = document.createElement('span');
-                    span.className = 'history-tag';
-                    span.innerText = item.substring(0, 25) + '...';
-                    logContainer.appendChild(span);
-                });
-            }
+            const container = document.getElementById('history-log');
+            container.innerHTML = '';
+            appData.folders[currentFolder].history.forEach(t => {
+                const s = document.createElement('span');
+                s.className = 'history-tag';
+                s.innerText = t.substring(0, 20) + '...';
+                container.appendChild(s);
+            });
         }
 
-        // 🛠️ CRITICAL FIXED API GATEWAY ROUTINE
+        // 🛠️ FIXED MULTI-API ENGINE (CORS & RECENT ENDPOINT PROOF)
         async function generatePost() {
             if (!currentFolder) return;
             const target = document.getElementById('target-username').value.trim();
             const context = document.getElementById('project-context').value.trim();
-            
-            if (!context) {
-                alert('Context cannot be blank!');
-                return;
-            }
+            const output = document.getElementById('post-output');
 
-            const outputElement = document.getElementById('post-output');
-            outputElement.innerText = 'Creating high-bypass human post... ✍️';
+            if (!context) { alert('Please provide text info!'); return; }
+            output.innerText = 'Writing human post... 💭';
 
             const historyText = appData.folders[currentFolder].history.join(' | ');
-
-            const systemInstruction = `You are a human writing a post on Twitter. Translate the info into very short, simple, casual English.
+            const promptInstruction = `Write a short, casual Twitter/X post based on this info: "${context}".
             RULES:
-            1. No AI Fingerprint: Do NOT use any emojis. Never use dashes like "-", "—", "–". Do NOT use formal/robotic words.
-            2. Typo Hack: You MUST include exactly ONE minor realistic spelling typo in the tweet (like writing "tomorow" instead of "tomorrow", or "teh" instead of "the").
-            3. Tagging: Tag the target account ${target} naturally.
-            4. Pure Text Only: Do not use quote marks, do not output any greetings or system explanations. Just the tweet text.
-            5. Anti-Repetition: Make sure this post does not look structurally like these past posts: [${historyText}].`;
+            1. Language: Write in very simple, short, casual English.
+            2. Anti-AI: No emojis. No dashes/hyphens like "-", "—", "–". No robotic words.
+            3. Human Typo: You MUST make exactly ONE realistic spelling mistake (like "teh", "dont", "profect", "realy") to make it look manually typed.
+            4. Tagging: Tag ${target} naturally.
+            5. Unique: Do not repeat or copy the style of these past posts: [${historyText}].
+            6. Output ONLY the raw post. No quotes, no intro text.`;
 
             if (appData.provider === 'gemini') {
-                // v1beta official direct system-instruction payload to bypass browser blockages
+                // FIXED: v1 Model URL Architecture for Web Browsers 
                 try {
-                    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${appData.apiKey}`;
-                    
-                    const response = await fetch(endpoint, {
+                    const url = `https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${appData.apiKey}`;
+                    const res = await fetch(url, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            contents: [{
-                                parts: [{ text: `${systemInstruction}\n\nProject Input Info:\n${context}` }]
-                            }]
-                        })
+                        body: JSON.stringify({ contents: [{ parts: [{ text: promptInstruction }] }] })
                     });
-
-                    const responseData = await response.json();
+                    const data = await res.json();
                     
-                    if (responseData.candidates && responseData.candidates[0].content.parts[0].text) {
-                        finalizeText(responseData.candidates[0].content.parts[0].text);
-                    } else if (responseData.error) {
-                        outputElement.innerText = `Gemini Server Error: ${responseData.error.message}\nMake sure your Gemini API Key is active.`;
+                    if (data.candidates && data.candidates[0].content.parts[0].text) {
+                        displayResult(data.candidates[0].content.parts[0].text);
                     } else {
-                        outputElement.innerText = "Error: Key could be invalid or blocked. Verify your Google Studio API status.";
+                        output.innerText = "Error: Invalid Gemini Key, or your Key has expired/been restricted.";
                     }
-                } catch (err) {
-                    outputElement.innerText = "Network dropped connection. Try re-saving your key or checking your browser extension.";
+                } catch (e) {
+                    output.innerText = "Gemini Connection Failed. Please ensure your Key is correct.";
                 }
             } else {
-                // Groq Endpoint with CORS-Anywhere fallback protection proxy
+                // Groq API CORS Fallback Handling
                 try {
-                    const proxyUrl = "https://corsproxy.io/?";
-                    const targetUrl = "https://api.groq.com/openai/v1/chat/completions";
-                    
-                    const response = await fetch(proxyUrl + encodeURIComponent(targetUrl), {
+                    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
                         method: 'POST',
                         headers: {
                             'Authorization': `Bearer ${appData.apiKey}`,
@@ -470,44 +389,35 @@
                         },
                         body: JSON.stringify({
                             model: 'llama3-8b-8192',
-                            messages: [
-                                { role: 'system', content: systemInstruction },
-                                { role: 'user', content: `Context data: ${context}` }
-                            ],
-                            temperature: 0.85
+                            messages: [{ role: 'user', content: promptInstruction }],
+                            temperature: 0.8
                         })
                     });
-
-                    const responseData = await response.json();
-                    if (responseData.choices && responseData.choices[0]) {
-                        finalizeText(responseData.choices[0].message.content);
+                    const data = await res.json();
+                    if(data.choices && data.choices[0].message.content) {
+                        displayResult(data.choices[0].message.content);
                     } else {
-                        outputElement.innerText = "Groq Engine Error: Key rejected or rate limit reached. Try the Gemini selection.";
+                        output.innerText = "Groq Key Error or Key Blocked.";
                     }
-                } catch (error) {
-                    outputElement.innerText = "CORS Cloud Proxy blocked the call. Gemini is highly recommended for static GitHub pages.";
+                } catch(e) {
+                    output.innerText = "CORS/Network Blocked Groq. Please use the Google Gemini API option; it is completely stable on GitHub Pages.";
                 }
             }
         }
 
-        function finalizeText(rawText) {
-            let processed = rawText.trim();
-            // Remove edge quotes if generated by model
-            processed = processed.replace(/^["']|["']$/g, '');
-            document.getElementById('post-output').innerText = processed;
-
-            appData.folders[currentFolder].history.push(processed);
+        function displayResult(text) {
+            let cleanText = text.trim().replace(/^["']|["']$/g, '');
+            document.getElementById('post-output').innerText = cleanText;
+            appData.folders[currentFolder].history.push(cleanText);
             saveToLocalStorage();
             renderHistory();
         }
 
         function copyPost() {
             const text = document.getElementById('post-output').innerText;
-            if(text && !text.startsWith('Ready to') && !text.startsWith('Creating high-bypass')) {
+            if(text && !text.startsWith('Ready') && !text.startsWith('Writing')) {
                 navigator.clipboard.writeText(text);
-                alert('Copied to clipboard! 📋');
-            } else {
-                alert('Nothing to copy!');
+                alert('Copied! 📋');
             }
         }
     </script>
